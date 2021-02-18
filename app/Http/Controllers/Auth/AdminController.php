@@ -7,12 +7,13 @@ use App\Models\Customers;
 use App\Models\Kavling;
 use App\Models\Tagihan;
 use App\Models\Transaksi;
+use App\Models\Blog;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
 {
     public function __construct()
@@ -171,6 +172,50 @@ class AdminController extends Controller
         ];
 
         return response()->json($message);
+
+    }
+
+    public function listBlog()
+    {
+        $blog = Blog::all();
+        return view('admin.blog.list', compact('blog'));
+    }
+
+    public function addBlog()
+    {
+        return view('admin.blog.add');
+
+    }
+
+    public function AddPostBlog(Request $request)
+    {
+        if ($request->file('cover')->isValid()) {
+            // dd($request);
+                //
+                $validated = Validator::make($request->all(), [
+                    'judul' => 'required|string',
+                    'cover' => 'mimes:jpeg,png|max:2048',
+                    'blog' => 'required'
+                ]);
+                if ($validated->fails()) {
+                    return redirect('admin/blog/add')
+                                ->withErrors($validated)
+                                ->withInput();
+                } else {
+                    $resorce       = $request->file('cover');
+                    $name   = "blogs/" . $resorce->getClientOriginalName();
+                    $resorce->move(\base_path() . "/public/storage/blogs/", $name);
+                    $file = Blog::create([
+                    'judul' => $request->judul,
+                    'cover' => $name,
+                    'isi_post' => $request->blog
+                    ]);
+                    
+                    return redirect('admin/blog/list')->with('message', 'sukses nambah data');
+                    
+                }
+                
+            }
 
     }
 

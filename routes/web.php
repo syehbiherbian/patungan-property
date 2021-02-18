@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'IndexController@index');
+Route::get('/blog/{id}/{slug}', 'IndexController@detail');
 
 Auth::routes();
 
@@ -35,9 +34,9 @@ Route::prefix('admin')->group(function() {
     Route::get('/kavling/add', 'Auth\AdminController@addKavling')->name('admin.kavling.tambah');
     Route::post('/kavling/add', 'Auth\AdminController@addPostKavling')->name('admin.kavling.post');
 
-    Route::get('/blog/list', 'Auth\AdminController@listKavling')->name('admin.kavling');
-    Route::get('/blog/add', 'Auth\AdminController@addKavling')->name('admin.kavling.tambah');
-    Route::post('/blog/add', 'Auth\AdminController@addPostKavling')->name('admin.kavling.post');
+    Route::get('/blog/list', 'Auth\AdminController@listBlog')->name('admin.blog');
+    Route::get('/blog/add', 'Auth\AdminController@addBlog')->name('admin.blog.tambah');
+    Route::post('/blog/add', 'Auth\AdminController@AddPostBlog')->name('admin.blog.post');
 
     Route::get('/penjualan/list', 'Auth\AdminController@listPenjualan')->name('admin.penjualan');
     Route::get('/penjualan/add', 'Auth\AdminController@addPenjualan')->name('admin.penjualan.tambah');

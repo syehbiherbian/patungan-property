@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Patungan Property</title>
+  <title>Investasi Kavling</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -12,6 +12,7 @@
 
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/select2/css/select2.min.css')}}">
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/jquery-ui/jquery-ui.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote-bs4.min.css')}}">
 
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -102,7 +103,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{ route('admin.blog') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Blog List</p>
                 </a>
@@ -218,6 +219,7 @@
 <script src="{{ asset('assets/admin/plugins/moment/moment.min.js')}}"></script>
 <script src="{{ asset('assets/admin/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
+<script src="{{ asset('assets/admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
 
 
 
