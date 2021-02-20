@@ -10,11 +10,22 @@
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active text-white" href="#activity" data-toggle="tab">Activity</a></li>
                   <li class="nav-item"><a class="nav-link text-white" href="#settings" data-toggle="tab">Settings</a></li>
+                  <li class="nav-item"><a class="nav-link text-white d-md-none d-lg-none d-xl-none" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();">Logout</a></li>
+                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                      @csrf
+                    </form>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
+                    @if(session('sukses'))
+                      <div class="alert alert-success" role="alert">
+                          Sukses Update Profile!
+                      </div>
+                    @endif
                     <!-- Post -->
                     <div class="post">
                       <h1 class="text-center">KARTU ANGSURAN <br>
@@ -106,35 +117,36 @@
                   </div>
 
                   <div class="tab-pane" id="settings">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="POST" action="{{ route('edit') }}">
+                      @csrf
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                          <input type="text" name="name" class="form-control" id="inputName" placeholder="Name">
+                          <input type="text" name="name" class="form-control" id="inputName" placeholder="Name" value="{{ Auth::user()->name }}">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                          <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email">
+                          <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ Auth::user()->email }}">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail" class="col-sm-2 col-form-label">No.Handphone</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="phone" class="form-control" id="inputEmail" placeholder="Email" value="{{ $user->phone_number}}">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputName2" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
-                          <input type="password" name="password" class="form-control" name="password" id="inputName2" placeholder="Name">
+                          <input type="password" name="password" class="form-control" name="password" id="inputName2" placeholder="Password">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputExperience" class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                          <textarea class="form-control" id="inputExperience" placeholder="Experience" name="alamat"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="skills" class="form-control" id="inputSkills" placeholder="Skills">
+                          <textarea class="form-control" id="inputExperience" placeholder="Experience" name="alamat">{{ $user->address}}</textarea>
                         </div>
                       </div>
                       <div class="form-group row">

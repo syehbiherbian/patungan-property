@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\User;
+
 class HomeController extends Controller
 {
     /**
@@ -38,5 +41,23 @@ class HomeController extends Controller
             ->get();
         // dd($tagihan);
         return view('home', compact('transaksi', 'user', 'tagihan'));
+    }
+
+    public function edit(Request $request)
+    {
+        $user = User::find(Auth::id());
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        if($user){
+            $cust = Customers::where('user_id', $user->id)->first();
+            $cust->address = $request->alamat;
+            $cust->phone_number = $request->phone;
+            $cust->save();
+            return redirect()->back()->with('sukses', 'sukses Update Profile');
+        }
+
+        
     }
 }
